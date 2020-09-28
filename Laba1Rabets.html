@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Лабораторная работа №1</title>
+</head>
+<body>
+    <h1>Лабораторная работа №1</h1>
+    <script>
+        var a = [], i = 0, k = 0, l = 0, swap, sum=0, min, max;
+        k = +prompt('Введите элемент массива', '');
+        a[i] = +k;
+        i++;
+        while (a[i-1]!='') {
+            k = +prompt('Введите элемент массива', '');
+            a[i] = +k;
+            
+            i++;
+        }
+        i--;
+
+        console.log('Элементы массива: ');
+        for(l = 0; l < i ; l++){
+            console.log(a[l]);
+            sum += a[l];
+        }
+        for (l = 0; l < i; l++)
+            for (k=1; k<i; k++)
+                if (a[k] < a[k - 1]) { swap = a[k]; a[k] = a[k - 1]; a[k - 1] = swap; }
+
+        console.log('Элементы отсортированного массива: ');
+        for (l = 0; l < i; l++)
+            console.log(a[l]);
+
+        min = a[0]; max = a[i-1];
+
+        console.log('Сумма элементов массива: ');
+        console.log(sum);
+
+        console.log('Минимальный элемент массива: ');
+        console.log(min);
+
+        console.log('Максимальный элемент массива: ');
+        console.log(max);
+
+    </script>
+</body>
+</html>
