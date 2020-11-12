@@ -209,7 +209,7 @@ return{
 
 let h10 = document.createElement('h1');
 let h1 = body.appendChild(h10);
-h1.innerText = "Лабораторная работа №2";
+h1.innerText = "Лабораторная работа №3";
 
 module.printTable();
 
