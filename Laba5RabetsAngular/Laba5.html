@@ -1,0 +1,99 @@
+<!doctype html>
+<html ng-app="progressApp">
+<head>
+<meta charset="utf-8">
+</head>
+<body ng-controller="progressController">
+        <h1> Список учащихся </h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>name</th>
+                    <th>surname</th>
+                    <th>age</th>
+                    <th>avMark</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="Student in Students">
+                    <td>{{Student.name}}</td>
+                    <td>{{Student.surname}}</td>
+                    <td>{{Student.age}}</td>
+                    <td class="mark">{{Student.avMark}}</td>
+                    <td><button ng-click="deleteStudent()">Удалить</button></td>
+                    <td><button ng-click="editStudent()">Редактировать</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <div><button ng-click="addStudent()">Добавить студента</button></div>
+        <div><b>Average mark: {{Mark()}}</b></div>
+ 
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script>
+    let progressApp = angular.module("progressApp", []);
+    progressApp.controller("progressController", function ($scope, $http) {
+    $http.get('./student.json').then(function success(response){
+    
+        let Students = []; 
+
+    $scope.Students = response.data;
+    
+
+    $scope.Mark = function (){
+        let marks = document.querySelectorAll(".mark");
+        let sum = 0;
+        marks.forEach(i => sum += +i.innerText);
+        let result = (sum/marks.length).toFixed(2);
+        if(isNaN(result))
+        return 0;
+        else
+        return result;
+    }
+
+    $scope.addStudent = function (){
+        let newObj = {
+                      name: prompt('Введите имя добавляемого студента!'),
+                      surname: prompt('Введите фамилию добавляемого студента!'),
+                      age: +prompt('Введите возраст добавляемого студента!'), 
+                      avMark: +prompt('Введите среднюю оценку добавляемого студента!')
+        };
+        if(newObj.name != "" && newObj.surname != "" && newObj.age != 0 && newObj.avMark != 0) 
+        {
+            $scope.Students.push(newObj);
+        }   
+        else
+        {
+            alert("Input error!")
+        }
+    }
+
+    $scope.editStudent = function (){
+        field = prompt('Введите имя поля которое хотите отредактировать:');
+    
+            switch (field){
+            case 'name': 
+               $scope.Students[this.$index][field] = prompt('Введите имя:');
+               break;
+            case 'surname': 
+               $scope.Students[this.$index][field] = prompt('Введите фамилию:');
+               break;
+            case 'age': 
+               $scope.Students[this.$index][field] = +prompt('Введите возраст:');
+               break;
+            case 'avMark': 
+               $scope.Students[this.$index][field] = +prompt('Введите среднюю оценку');
+               break;
+            default: alert('There is no field with this name!');
+            }
+    }
+
+    $scope.deleteStudent = function (){
+        $scope.Students.splice(this.$index,1)
+    }
+  }); 
+});
+
+</script>
+</body>
+</html>
+
